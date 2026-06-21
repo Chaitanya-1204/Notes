@@ -1,0 +1,64 @@
+---
+import CppDocsLayout from '../../../../layouts/CppDocsLayout.astro';
+const headings = [
+  { id:'iostream', label:'The iostream header' },
+  { id:'output', label:'Output with cout' },
+  { id:'input', label:'Input with cin' },
+  { id:'multiple-values', label:'Reading multiple values' },
+  { id:'full-lines', label:'Reading full lines' },
+  { id:'formatting', label:'Formatting output' },
+  { id:'complete-example', label:'Complete example' },
+];
+---
+<CppDocsLayout title="Input and Output" description="Read values from the terminal and display formatted output using the C++ standard streams." current="input-output" {headings} previous={{ title:'Installing C++', href:'/programming-languages/cpp/installation/' }}>
+  <section id="iostream"><h2>The iostream header</h2><p>The <code>&lt;iostream&gt;</code> header provides the standard stream objects used for terminal input and output:</p><ul><li><code>std::cout</code> writes normal output.</li><li><code>std::cin</code> reads input.</li><li><code>std::cerr</code> writes error messages.</li></ul><pre><code>#include &lt;iostream&gt;</code></pre></section>
+  <section id="output"><h2>Output with cout</h2><p>Use the insertion operator <code>&lt;&lt;</code> to send values to <code>std::cout</code>. Multiple values can be chained in one statement.</p><pre><code>std::cout &lt;&lt; "Score: " &lt;&lt; 95 &lt;&lt; '\n';</code></pre><p>Prefer <code>'\n'</code> for a normal line break. <code>std::endl</code> also flushes the output buffer and is usually unnecessary.</p></section>
+  <section id="input"><h2>Input with cin</h2><p>Use the extraction operator <code>&gt;&gt;</code> to read a formatted value into a variable. The input must be compatible with the variable's type.</p><pre><code>int age&#123;&#125;;
+
+std::cout &lt;&lt; "Enter your age: ";
+std::cin &gt;&gt; age;
+std::cout &lt;&lt; "You are " &lt;&lt; age &lt;&lt; " years old.\n";</code></pre></section>
+  <section id="multiple-values"><h2>Reading multiple values</h2><p>Extraction operations can be chained. Whitespace separates the values typed by the user.</p><pre><code>int width&#123;&#125;;
+int height&#123;&#125;;
+
+std::cout &lt;&lt; "Enter width and height: ";
+std::cin &gt;&gt; width &gt;&gt; height;
+
+std::cout &lt;&lt; "Area: " &lt;&lt; width * height &lt;&lt; '\n';</code></pre></section>
+  <section id="full-lines"><h2>Reading full lines</h2><p><code>std::cin &gt;&gt;</code> stops at whitespace. Use <code>std::getline</code> when the input may contain spaces.</p><pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+std::string name;
+std::cout &lt;&lt; "Enter your full name: ";
+std::getline(std::cin, name);
+std::cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; "!\n";</code></pre><div class="callout"><p>After using <code>std::cin &gt;&gt;</code>, consume the remaining newline with <code>std::getline(std::cin &gt;&gt; std::ws, value)</code> before reading a complete line.</p></div></section>
+  <section id="formatting"><h2>Formatting output</h2><p>The <code>&lt;iomanip&gt;</code> header provides tools for controlling numeric output.</p><pre><code>#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+
+double price&#123;19.5&#125;;
+std::cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(2)
+          &lt;&lt; "$" &lt;&lt; price &lt;&lt; '\n';
+
+// Output: $19.50</code></pre></section>
+  <section id="complete-example"><h2>Complete example</h2><p>This program reads a product name, price, and quantity, then prints a formatted total.</p><pre><code>#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() &#123;
+    std::string product;
+    double price&#123;&#125;;
+    int quantity&#123;&#125;;
+
+    std::cout &lt;&lt; "Product: ";
+    std::getline(std::cin, product);
+
+    std::cout &lt;&lt; "Price and quantity: ";
+    std::cin &gt;&gt; price &gt;&gt; quantity;
+
+    const double total&#123;price * quantity&#125;;
+    std::cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(2)
+              &lt;&lt; product &lt;&lt; " total: $" &lt;&lt; total &lt;&lt; '\n';
+
+    return 0;
+&#125;</code></pre></section>
+</CppDocsLayout>

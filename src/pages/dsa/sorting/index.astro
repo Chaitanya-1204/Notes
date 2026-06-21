@@ -1,0 +1,39 @@
+---
+import DsaDocsLayout from '../../../layouts/DsaDocsLayout.astro';
+
+const headings = [
+  { id:'overview', label:'Overview' },
+  { id:'how-sorting-works', label:'How sorting works' },
+  { id:'common-algorithms', label:'Common algorithms' },
+  { id:'complexity', label:'Complexity' },
+];
+---
+<DsaDocsLayout title="Sorting" description="Temporary notes for understanding sorting algorithms and their trade-offs." {headings}>
+  <section id="overview">
+    <h2>Overview</h2>
+    <p>Sorting arranges a collection of values into a defined order. These temporary notes will be expanded with explanations, examples, and implementations.</p>
+  </section>
+
+  <section id="how-sorting-works">
+    <h2>How sorting works</h2>
+    <p>A sorting algorithm compares or distributes values, then moves them until every item is in its correct position.</p>
+    <div class="callout"><p><strong>Temporary note:</strong> Add diagrams and step-by-step traces here.</p></div>
+  </section>
+
+  <section id="common-algorithms">
+    <h2>Common algorithms</h2>
+    <ul>
+      <li>Bubble sort</li>
+      <li>Selection sort</li>
+      <li>Insertion sort</li>
+      <li>Merge sort</li>
+      <li>Quick sort</li>
+    </ul>
+  </section>
+
+  <section id="complexity">
+    <h2>Complexity</h2>
+    <p>Sorting algorithms are compared by their time complexity, space usage, stability, and behavior on partially sorted input.</p>
+    <pre><code>Temporary: add a sorting complexity comparison table.</code></pre>
+  </section>
+</DsaDocsLayout>

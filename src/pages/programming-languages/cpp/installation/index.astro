@@ -1,0 +1,39 @@
+---
+import CppDocsLayout from '../../../../layouts/CppDocsLayout.astro';
+const headings = [
+  { id:'what-you-need', label:'What you need' },
+  { id:'macos', label:'Install on macOS' },
+  { id:'windows', label:'Install on Windows' },
+  { id:'linux', label:'Install on Linux' },
+  { id:'editor', label:'Configure an editor' },
+  { id:'verify', label:'Verify the installation' },
+  { id:'first-program', label:'Compile your first program' },
+];
+---
+<CppDocsLayout title="Installing C++" description="Set up a C++ compiler, configure an editor, and compile your first program." current="installation" {headings} next={{ title:'Input and Output', href:'/programming-languages/cpp/input-output/' }}>
+  <section id="what-you-need"><h2>What you need</h2><p>C++ source code must be translated into machine code by a <strong>compiler</strong>. A practical setup has three parts:</p><ul><li>A compiler such as GCC, Clang, or Microsoft Visual C++.</li><li>A code editor such as Visual Studio Code.</li><li>A terminal for compiling and running programs.</li></ul><div class="callout"><p><strong>Use one toolchain.</strong> Choose the instructions for your operating system. You do not need to install every compiler listed here.</p></div></section>
+  <section id="macos"><h2>Install on macOS</h2><p>macOS provides the Clang compiler through the Command Line Tools package. Open Terminal and run:</p><pre><code>xcode-select --install</code></pre><p>Complete the installer, then confirm that Clang is available:</p><pre><code>clang++ --version</code></pre></section>
+  <section id="windows"><h2>Install on Windows</h2><p>The simplest supported setup is Microsoft Visual Studio Build Tools.</p><ol><li>Download <strong>Build Tools for Visual Studio</strong> from Microsoft.</li><li>In the installer, select <strong>Desktop development with C++</strong>.</li><li>Keep MSVC, the Windows SDK, and C++ CMake tools selected.</li><li>Open the <strong>Developer Command Prompt for Visual Studio</strong>.</li></ol><p>Verify the compiler:</p><pre><code>cl</code></pre><p>Alternatively, install GCC through MSYS2 when you specifically need the GNU toolchain.</p></section>
+  <section id="linux"><h2>Install on Linux</h2><p>Install GCC and the standard build tools using your distribution's package manager.</p><h3>Ubuntu or Debian</h3><pre><code>sudo apt update
+sudo apt install build-essential
+g++ --version</code></pre><h3>Fedora</h3><pre><code>sudo dnf group install "Development Tools"
+g++ --version</code></pre><h3>Arch Linux</h3><pre><code>sudo pacman -S base-devel gcc
+g++ --version</code></pre></section>
+  <section id="editor"><h2>Configure an editor</h2><p>Visual Studio Code is a convenient cross-platform editor. Install the official <strong>C/C++</strong> extension from Microsoft for code completion, error highlighting, and debugging support.</p><p>The editor does not replace the compiler. Your compiler must already work in the terminal before editor build tasks will work reliably.</p></section>
+  <section id="verify"><h2>Verify the installation</h2><p>Run the version command for your compiler. A version number confirms that the executable is installed and available on your system path.</p><pre><code># GCC
+g++ --version
+
+# Clang
+clang++ --version
+
+# Microsoft Visual C++
+cl</code></pre></section>
+  <section id="first-program"><h2>Compile your first program</h2><p>Create a file named <code>main.cpp</code>:</p><pre><code>#include &lt;iostream&gt;
+
+int main() &#123;
+    std::cout &lt;&lt; "Hello, C++!\n";
+    return 0;
+&#125;</code></pre><p>Compile and run it with GCC or Clang:</p><pre><code>g++ main.cpp -std=c++20 -Wall -Wextra -o hello
+./hello</code></pre><p>On Windows with MSVC:</p><pre><code>cl /EHsc /std:c++20 main.cpp
+main.exe</code></pre><div class="callout"><p><strong>Expected output:</strong> <code>Hello, C++!</code></p></div></section>
+</CppDocsLayout>

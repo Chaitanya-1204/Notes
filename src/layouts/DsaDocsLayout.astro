@@ -1,0 +1,77 @@
+---
+import '../styles/docs.css';
+import Navbar from '../components/Navbar.astro';
+
+interface Heading { id:string; label:string; }
+interface Props {
+  title:string;
+  description:string;
+  headings:Heading[];
+}
+
+const { title, description, headings } = Astro.props;
+---
+<!doctype html>
+<html lang="en" style="--collection-accent:#42d291;--cpp:#42d291">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <title>{title} · DSA Notes · Braindump</title>
+  </head>
+  <body>
+    <Navbar />
+    <div class="docs-shell">
+      <aside class="docs-sidebar" aria-label="DSA notes">
+        <a class="sidebar-overview active" href="/dsa/sorting/" aria-current="page">Sorting</a>
+        <div class="sidebar-divider" aria-hidden="true"></div>
+        <details class="sidebar-group" open>
+          <summary>Sorting notes <span aria-hidden="true">⌄</span></summary>
+          <nav>
+            {headings.map((heading, index) => <a class:list={{ active:index === 0 }} href={`#${heading.id}`}>{heading.label}</a>)}
+          </nav>
+        </details>
+      </aside>
+
+      <main class="docs-content">
+        <nav class="docs-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/dsa/">DSA</a><span>/</span><span>Sorting</span></nav>
+        <header class="article-header"><p>DSA Documentation</p><h1>{title}</h1><span>{description}</span></header>
+        <article class="docs-article"><slot /></article>
+        <nav class="page-navigation" aria-label="Documentation pages">
+          <span class="page-link disabled"><small>← Previous</small><strong>Start of notes</strong></span>
+          <span class="page-link next disabled"><small>Next →</small><strong>More notes soon</strong></span>
+        </nav>
+      </main>
+
+      <aside class="contents-sidebar" aria-label="On this page"><p>On this page</p><nav>{headings.map((heading) => <a href={`#${heading.id}`}>{heading.label}</a>)}</nav></aside>
+    </div>
+
+    <script>
+      const sections = [...document.querySelectorAll<HTMLElement>('.docs-article section[id]')];
+      const contentsLinks = [...document.querySelectorAll<HTMLAnchorElement>('.contents-sidebar a')];
+      const sidebarLinks = [...document.querySelectorAll<HTMLAnchorElement>('.sidebar-group nav a')];
+      let ticking = false;
+
+      function updateActiveSection() {
+        let active = sections[0]?.id;
+        for (const section of sections) {
+          if (section.getBoundingClientRect().top <= 150) active = section.id;
+          else break;
+        }
+        [...contentsLinks, ...sidebarLinks].forEach((link) => {
+          const isActive = link.hash === `#${active}`;
+          link.classList.toggle('active', isActive);
+          if (isActive) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+        ticking = false;
+      }
+
+      document.addEventListener('scroll', () => {
+        if (!ticking) { requestAnimationFrame(updateActiveSection); ticking = true; }
+      }, { passive:true });
+      updateActiveSection();
+    </script>
+  </body>
+</html>

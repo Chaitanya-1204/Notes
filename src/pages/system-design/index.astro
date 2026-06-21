@@ -1,0 +1,6 @@
+---
+import CollectionPage from '../../layouts/CollectionPage.astro';
+
+const topics: Array<{ title:string; description?:string; href:string }> = [];
+---
+<CollectionPage title="System Design" description="Notes on designing scalable, reliable, and maintainable software systems." accent="#f0c84b" symbol="SD" sectionLabel="Architecture" sectionTitle="System design notes" {topics} />

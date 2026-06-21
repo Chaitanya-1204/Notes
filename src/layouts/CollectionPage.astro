@@ -1,0 +1,71 @@
+---
+import '../styles/collection.css';
+import Navbar from '../components/Navbar.astro';
+
+interface Topic {
+  label?: string;
+  title: string;
+  description?: string;
+  href: string;
+  icon?: string;
+  image?: string;
+  color?: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  accent: string;
+  symbol: string;
+  topics: Topic[];
+  sectionLabel?: string;
+  sectionTitle?: string;
+}
+
+const { title, description, accent, symbol, topics, sectionLabel = 'Learning path', sectionTitle = 'Explore the topics' } = Astro.props;
+---
+<!doctype html>
+<html lang="en" style={`--collection-accent:${accent}`}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" sizes="any" />
+    <title>{title} · Braindump</title>
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span aria-hidden="true">/</span><span>{title}</span>
+      </nav>
+      <section class="collection-hero">
+        <div class="hero-copy">
+          <h1>{title}</h1>
+          <p>{description}</p>
+        </div>
+        <div class="hero-symbol" aria-hidden="true">{symbol}</div>
+      </section>
+      <section class="topics" aria-labelledby="topics-title">
+        <div class="section-heading">
+          <div><p>{sectionLabel}</p><h2 id="topics-title">{sectionTitle}</h2></div>
+        </div>
+        <div class="topic-grid">
+          {topics.map((topic) => (
+            <a class:list={['topic-card', { compact:!topic.description, 'has-logo':!!topic.image }]} href={topic.href} style={topic.color ? `--topic-accent:${topic.color}` : undefined}>
+              <div class="topic-heading">
+                {topic.image ? <span class="topic-logo"><img src={topic.image} alt="" /></span> : topic.icon && <span class="topic-icon">{topic.icon}</span>}
+                <span class="topic-title">
+                  {topic.label && <small>{topic.label}</small>}
+                  <h3>{topic.title}</h3>
+                </span>
+              </div>
+              {topic.description && <p>{topic.description}</p>}
+              <span class="topic-action">Read notes <span class="topic-arrow" aria-hidden="true">→</span></span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

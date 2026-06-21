@@ -1,0 +1,52 @@
+---
+import '../styles/home.css';
+import Navbar from '../components/Navbar.astro';
+
+const collections = [
+  { title: 'Programming Languages', href: '/programming-languages/', icon: '</>' },
+  { title: 'DSA', href: '/dsa/', icon: 'DS' },
+  { title: 'System Design', href: '/system-design/', icon: 'SD' },
+  { title: 'Generative AI', href: '/generative-ai/', icon: 'AI' },
+  { title: 'Developer Tools', href: '/developer-tools/', icon: 'DEV' },
+];
+
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A personal software engineering knowledge base." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" sizes="any" />
+    <title>Braindump</title>
+  </head>
+  <body>
+    <Navbar />
+    <main>
+      <section class="intro">
+        <div class="intro-copy">
+          <p class="kicker">Learn · Understand · Build</p>
+          <h1>Everything I study,<br /><span>from theory to practice.</span></h1>
+          <p>An evolving collection of notes on technologies, tools, and concepts, covering how they work, why they matter, and how to use them.</p>
+          <a class="primary-cta" href="#library">Browse Library <span aria-hidden="true">↓</span></a>
+        </div>
+        <aside class="assistant-teaser" aria-label="Smriti knowledge assistant, coming soon">
+          <span class="assistant-mark"><img src="/favicon.svg" alt="" /></span>
+          <span class="assistant-copy"><small>Coming soon</small><strong>Meet Smriti <b lang="sa">स्मृति</b></strong><span>Ask questions across the entire library and find answers grounded in these notes.</span></span>
+        </aside>
+      </section>
+      <section id="library">
+        <div class="library-heading"><div><p class="section-kicker">Collections</p><h2>Library</h2></div></div>
+        <div class="grid">
+          {collections.map(item => (
+            <a class="card" href={item.href}>
+              <span class="card-top"><span class="icon">{item.icon}</span><span class="status">Explore collection</span></span>
+              <span class="copy"><strong>{item.title}</strong></span>
+              <span class="card-action">Browse notes <span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

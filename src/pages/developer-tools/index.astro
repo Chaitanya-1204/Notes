@@ -1,0 +1,8 @@
+---
+import CollectionPage from '../../layouts/CollectionPage.astro';
+
+const topics = [
+  { label: 'Version Control', title: 'Git', image: '/git-logo.svg', color: '#42d291', href: '/developer-tools/' },
+];
+---
+<CollectionPage title="Developer Tools" description="Notes and references for the tools used to build, manage, and ship software." accent="#42d291" symbol="DEV" sectionLabel="Toolbox" sectionTitle="Browse developer tools" {topics} />

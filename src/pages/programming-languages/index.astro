@@ -1,0 +1,7 @@
+---
+import CollectionPage from '../../layouts/CollectionPage.astro';
+const topics = [
+  { label: 'Language', title: 'C++', image: '/cpp-logo.svg', color: '#659ad2', href: '/programming-languages/cpp/installation/' },
+];
+---
+<CollectionPage title="Programming Languages" description="My notes and references for the programming languages I study, from core ideas to practical patterns." accent="#659ad2" symbol="</>" sectionLabel="Programming Notes" sectionTitle="Browse by language" {topics} />
