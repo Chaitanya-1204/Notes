@@ -13,6 +13,8 @@ interface Props {
   next?:NoteLink;
 }
 const { title, description, headings, current, previous, next } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
 const notes = [
   { id:'installation', title:'Installation', href:'/programming-languages/cpp/installation/' },
   { id:'input-output', title:'Input and Output', href:'/programming-languages/cpp/input-output/' },
@@ -24,27 +26,27 @@ const notes = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg?v=2')} />
     <title>{title} · C++ Notes · Braindump</title>
   </head>
   <body>
     <Navbar />
     <div class="docs-shell">
       <aside class="docs-sidebar" aria-label="C++ notes">
-        <a class:list={['sidebar-overview', { active:current === 'overview' }]} href="/programming-languages/cpp/" aria-current={current === 'overview' ? 'page' : undefined}>Overview</a>
+        <a class:list={['sidebar-overview', { active:current === 'overview' }]} href={withBase('/programming-languages/cpp/')} aria-current={current === 'overview' ? 'page' : undefined}>Overview</a>
         <div class="sidebar-divider" aria-hidden="true"></div>
         <details class="sidebar-group" open>
           <summary>Getting started <span aria-hidden="true">⌄</span></summary>
-          <nav>{notes.map((note) => <a class:list={{ active:current === note.id }} href={note.href} aria-current={current === note.id ? 'page' : undefined}>{note.title}</a>)}</nav>
+          <nav>{notes.map((note) => <a class:list={{ active:current === note.id }} href={withBase(note.href)} aria-current={current === note.id ? 'page' : undefined}>{note.title}</a>)}</nav>
         </details>
       </aside>
       <main class="docs-content">
-        <nav class="docs-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/programming-languages/">Programming Languages</a><span>/</span><span>C++</span></nav>
+        <nav class="docs-breadcrumb" aria-label="Breadcrumb"><a href={base}>Home</a><span>/</span><a href={withBase('/programming-languages/')}>Programming Languages</a><span>/</span><span>C++</span></nav>
         <header class="article-header"><p>C++ Documentation</p><h1>{title}</h1><span>{description}</span></header>
         <article class="docs-article"><slot /></article>
         <nav class="page-navigation" aria-label="Documentation pages">
-          {previous ? <a class="page-link previous" href={previous.href}><small>← Previous</small><strong>{previous.title}</strong></a> : <span class="page-link disabled"><small>← Previous</small><strong>Start of notes</strong></span>}
-          {next ? <a class="page-link next" href={next.href}><small>Next →</small><strong>{next.title}</strong></a> : <span class="page-link next disabled"><small>Next →</small><strong>More notes soon</strong></span>}
+          {previous ? <a class="page-link previous" href={withBase(previous.href)}><small>← Previous</small><strong>{previous.title}</strong></a> : <span class="page-link disabled"><small>← Previous</small><strong>Start of notes</strong></span>}
+          {next ? <a class="page-link next" href={withBase(next.href)}><small>Next →</small><strong>{next.title}</strong></a> : <span class="page-link next disabled"><small>Next →</small><strong>More notes soon</strong></span>}
         </nav>
       </main>
       <aside class="contents-sidebar" aria-label="On this page"><p>On this page</p><nav>{headings.map((heading) => <a href={`#${heading.id}`}>{heading.label}</a>)}</nav></aside>

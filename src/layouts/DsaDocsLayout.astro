@@ -10,6 +10,8 @@ interface Props {
 }
 
 const { title, description, headings } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
 ---
 <!doctype html>
 <html lang="en" style="--collection-accent:#42d291;--cpp:#42d291">
@@ -17,14 +19,14 @@ const { title, description, headings } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg?v=2')} />
     <title>{title} · DSA Notes · Braindump</title>
   </head>
   <body>
     <Navbar />
     <div class="docs-shell">
       <aside class="docs-sidebar" aria-label="DSA notes">
-        <a class="sidebar-overview active" href="/dsa/sorting/" aria-current="page">Sorting</a>
+        <a class="sidebar-overview active" href={withBase('/dsa/sorting/')} aria-current="page">Sorting</a>
         <div class="sidebar-divider" aria-hidden="true"></div>
         <details class="sidebar-group" open>
           <summary>Sorting notes <span aria-hidden="true">⌄</span></summary>
@@ -35,7 +37,7 @@ const { title, description, headings } = Astro.props;
       </aside>
 
       <main class="docs-content">
-        <nav class="docs-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/dsa/">DSA</a><span>/</span><span>Sorting</span></nav>
+        <nav class="docs-breadcrumb" aria-label="Breadcrumb"><a href={base}>Home</a><span>/</span><a href={withBase('/dsa/')}>DSA</a><span>/</span><span>Sorting</span></nav>
         <header class="article-header"><p>DSA Documentation</p><h1>{title}</h1><span>{description}</span></header>
         <article class="docs-article"><slot /></article>
         <nav class="page-navigation" aria-label="Documentation pages">

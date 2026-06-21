@@ -2,6 +2,8 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
+  site: 'https://chaitanya-1204.github.io',
+  base: '/Notes',
   devToolbar: {
     enabled: false,
   },
@@ -13,7 +15,7 @@ export default defineConfig({
         src: './src/assets/braindump-mark.svg',
         alt: 'Braindump',
       },
-      favicon: '/favicon.svg?v=2',
+      favicon: '/Notes/favicon.svg?v=2',
       customCss: ['./src/styles/starlight.css'],
       pagefind: true,
       sidebar: [

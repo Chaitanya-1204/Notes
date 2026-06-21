@@ -1,5 +1,7 @@
 ---
 import '../styles/navbar.css';
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const withBase = (path: string) => `${base}${path.replace(/^\//, '')}`;
 const pages = [
   { title: 'Programming Languages', description: 'Language collection', href: '/programming-languages/' },
   { title: 'C++ Installation', description: 'C++ documentation', href: '/programming-languages/cpp/installation/' },
@@ -10,10 +12,10 @@ const pages = [
   { title: 'System Design', description: 'System design collection', href: '/system-design/' },
   { title: 'Developer Tools', description: 'Development tools collection', href: '/developer-tools/' },
   { title: 'Git', description: 'Version control notes', href: '/developer-tools/' },
-];
+].map((page) => ({ ...page, href: withBase(page.href) }));
 ---
 <header class="header">
-  <a class="logo" href="/" aria-label="Braindump home"><span class="logo-mark"><img src="/favicon.svg" alt="" /></span><span>Braindump</span></a>
+  <a class="logo" href={base} aria-label="Braindump home"><span class="logo-mark"><img src={withBase('/favicon.svg')} alt="" /></span><span>Braindump</span></a>
   <div class="search-shell" data-pages={JSON.stringify(pages)}>
     <label class="search">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2"/></svg>

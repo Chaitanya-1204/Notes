@@ -23,6 +23,8 @@ interface Props {
 }
 
 const { title, description, accent, symbol, topics, sectionLabel = 'Learning path', sectionTitle = 'Explore the topics' } = Astro.props;
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const withBase = (path: string) => path.startsWith('/') ? `${base}${path.slice(1)}` : path;
 ---
 <!doctype html>
 <html lang="en" style={`--collection-accent:${accent}`}>
@@ -30,14 +32,14 @@ const { title, description, accent, symbol, topics, sectionLabel = 'Learning pat
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg?v=2')} sizes="any" />
     <title>{title} · Braindump</title>
   </head>
   <body>
     <Navbar />
     <main>
       <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a><span aria-hidden="true">/</span><span>{title}</span>
+        <a href={base}>Home</a><span aria-hidden="true">/</span><span>{title}</span>
       </nav>
       <section class="collection-hero">
         <div class="hero-copy">
@@ -52,9 +54,9 @@ const { title, description, accent, symbol, topics, sectionLabel = 'Learning pat
         </div>
         <div class="topic-grid">
           {topics.map((topic) => (
-            <a class:list={['topic-card', { compact:!topic.description, 'has-logo':!!topic.image }]} href={topic.href} style={topic.color ? `--topic-accent:${topic.color}` : undefined}>
+            <a class:list={['topic-card', { compact:!topic.description, 'has-logo':!!topic.image }]} href={withBase(topic.href)} style={topic.color ? `--topic-accent:${topic.color}` : undefined}>
               <div class="topic-heading">
-                {topic.image ? <span class="topic-logo"><img src={topic.image} alt="" /></span> : topic.icon && <span class="topic-icon">{topic.icon}</span>}
+                {topic.image ? <span class="topic-logo"><img src={withBase(topic.image)} alt="" /></span> : topic.icon && <span class="topic-icon">{topic.icon}</span>}
                 <span class="topic-title">
                   {topic.label && <small>{topic.label}</small>}
                   <h3>{topic.title}</h3>
